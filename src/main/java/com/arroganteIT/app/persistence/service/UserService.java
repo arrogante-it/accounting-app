@@ -2,6 +2,7 @@ package com.arroganteIT.app.persistence.service;
 
 import com.arroganteIT.app.persistence.entity.User;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface UserService {
@@ -16,5 +17,9 @@ public interface UserService {
 
     List<User> findAllSortByName();
 
-    List<User> findAllByNameLength();
+    List<User> findAllSortByNameLength();
+
+    User retrieveByEmail(String email);
+
+    Collection<User> findAllActiveUsers();
 }

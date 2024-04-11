@@ -3,6 +3,7 @@ package com.arroganteIT.app.persistence.entity;
 import com.arroganteIT.app.persistence.enums.AccountStatus;
 import com.arroganteIT.app.persistence.enums.AccountType;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -57,6 +58,7 @@ public class Account {
     @NotNull
     private AccountStatus accountStatus;
 
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id")
     @NotNull

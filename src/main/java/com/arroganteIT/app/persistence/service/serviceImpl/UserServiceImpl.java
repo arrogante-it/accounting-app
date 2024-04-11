@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -67,7 +68,19 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<User> findAllByNameLength() {
+    public List<User> findAllSortByNameLength() {
         return userRepository.findAll(JpaSort.unsafe("length(name)"));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public User retrieveByEmail(String email) {
+        return userRepository.retrieveByEmail(email);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Collection<User> findAllActiveUsers() {
+        return userRepository.findAllActiveUsers();
     }
 }
