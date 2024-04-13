@@ -9,7 +9,7 @@ import java.util.Collection;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    User findByName(String name);
+    User findByNameIsNotNull(String name);
 
     @Query("select u from User u where lower(u.email) = lower(:email)")
     User retrieveByEmail(@Param("email") String email);

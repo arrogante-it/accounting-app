@@ -56,8 +56,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public User findByName(String name) {
-        return userRepository.findByName(name);
+    public User findByNameIsNotNull(String name) {
+        return userRepository.findByNameIsNotNull(name);
     }
 
     @Transactional(readOnly = true)

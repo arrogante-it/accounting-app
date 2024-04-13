@@ -13,7 +13,7 @@ public interface UserService {
 
     User updateById(User user, Long id);
 
-    User findByName(String name);
+    User findByNameIsNotNull(String name);
 
     List<User> findAllSortByName();
 
