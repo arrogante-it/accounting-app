@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-    @Query("select a from Account a where a.unique_key = :unique_key")
-    Account findByUniqueKey(@Param("unique_key") String uniqueKey);
+//    @Query("select a from Account a where a.unique_key = :unique_key")
+//    Account findByUniqueKey(@Param("unique_key") String uniqueKey);
 }

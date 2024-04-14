@@ -32,21 +32,21 @@ public class AccountServiceImpl implements AccountService {
         accountRepository.deleteById(id);
     }
 
-    @Transactional
-    @Override
-    public Account updateById(Account account, Long id) {
-        Account existingAccount = accountRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("no such account in DB with id = " + id));
-
-        existingAccount.setUniqueKey(account.getUniqueKey());
-        existingAccount.setAccountStatus(account.getAccountStatus());
-        existingAccount.setAccountType(account.getAccountType());
-        existingAccount.setBalance(account.getBalance());
-        existingAccount.setCreatingDate(account.getCreatingDate());
-        existingAccount.setUser(account.getUser());
-
-        return existingAccount;
-    }
+//    @Transactional
+//    @Override
+//    public Account updateById(Account account, Long id) {
+//        Account existingAccount = accountRepository.findById(id)
+//                .orElseThrow(() -> new EntityNotFoundException("no such account in DB with id = " + id));
+//
+//        existingAccount.setUniqueKey(account.getUniqueKey());
+//        existingAccount.setAccountStatus(account.getAccountStatus());
+//        existingAccount.setAccountType(account.getAccountType());
+//        existingAccount.setBalance(account.getBalance());
+//        existingAccount.setCreatingDate(account.getCreatingDate());
+//        existingAccount.setUser(account.getUser());
+//
+//        return existingAccount;
+//    }
 
     @Transactional(readOnly = true)
     @Override
@@ -61,9 +61,9 @@ public class AccountServiceImpl implements AccountService {
                 .orElseThrow(() -> new EntityNotFoundException("no such account in DB with id = " + id));
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public Account findByUniqueKey(String uniqueKey) {
-        return accountRepository.findByUniqueKey(uniqueKey);
-    }
+//    @Transactional(readOnly = true)
+//    @Override
+//    public Account findByUniqueKey(String uniqueKey) {
+//        return accountRepository.findByUniqueKey(uniqueKey);
+//    }
 }
