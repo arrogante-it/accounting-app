@@ -22,10 +22,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -41,82 +38,73 @@ public class ExchangeRatesUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String name;
-
-    @ToString.Exclude
-    @OneToMany(mappedBy = "exuser")
-    private List<Account> accounts;
-
-//    @Basic
-//    @Size(max = 1)
-//    @NotNull
-//    private int status;
+    @Basic
+    @Size(max = 1)
+    @NotNull
+    private int status;
 
 //    @Convert(converter = UserNameConverter.class)
 //    private UserNameFields name;
 
-//    @Basic
-//    @Embedded
-//    @AttributeOverrides({
-//            @AttributeOverride(name = "firstName", column = @Column(name = "first_name", length = 75)),
-//            @AttributeOverride(name = "lastName", column = @Column(name = "last_name", length = 75))
-//    })
-//    private UserName name;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "firstName", column = @Column(name = "first_name", length = 75)),
+            @AttributeOverride(name = "lastName", column = @Column(name = "last_name", length = 75))
+    })
+    private UserName name;
 
-//    @Basic
-//    @Embedded
-//    @AttributeOverrides({
-//            @AttributeOverride(name = "country", column = @Column(name = "address_country", length = 50)),
-//            @AttributeOverride(name = "city", column = @Column(name = "address_city", length = 50)),
-//            @AttributeOverride(name = "street", column = @Column(name = "address_street", length = 50))
-//    })
-//    private Address address;
-//
-//    @Column(name = "phone_number")
-//    @NotNull
-//    private String phoneNumber;
-//
-//    @Basic
-//    @NotNull
-//    private String email;
-//
-//    @Basic
-//    @NotNull
-//    private LocalDate birthday;
-//
-//    @Basic
-//    @Transient
-//    @NotNull
-//    private int age;
-//
-//    @Basic(optional = false)
-//    @Enumerated(EnumType.STRING)
-//    @NotNull
-//    private Gender gender;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "country", column = @Column(name = "address_country", length = 50)),
+            @AttributeOverride(name = "city", column = @Column(name = "address_city", length = 50)),
+            @AttributeOverride(name = "street", column = @Column(name = "address_street", length = 50))
+    })
+    private Address address;
 
 
-   // @Setter(AccessLevel.PRIVATE)
-    //@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @Basic
+    @Column(name = "phone_number")
+    @NotNull
+    private String phoneNumber;
 
+    @Basic
+    @NotNull
+    private String email;
 
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//
-//        if (o == null) return false;
-//
-//        if (o instanceof ExchangeRatesUser) {
-//            if (((ExchangeRatesUser) o).getEmail().equals(getEmail())) {
-//                return true;
-//            }
-//        }
-//
-//        return false;
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return java.util.Objects.hashCode(email);
-//    }
+    @NotNull
+    private LocalDate birthday;
+
+    @Basic
+    @Transient
+    @NotNull
+    private int age;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private Gender gender;
+
+    @Setter(AccessLevel.PRIVATE)
+    @ToString.Exclude
+    @OneToMany(mappedBy = "exuser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Account> accounts;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null) return false;
+
+        if (o instanceof ExchangeRatesUser) {
+            if (((ExchangeRatesUser) o).getEmail().equals(getEmail())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hashCode(email);
+    }
 }
