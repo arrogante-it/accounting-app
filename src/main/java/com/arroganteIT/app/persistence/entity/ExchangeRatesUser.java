@@ -62,12 +62,10 @@ public class ExchangeRatesUser {
     private Address address;
 
 
-    @Basic
     @Column(name = "phone_number")
     @NotNull
     private String phoneNumber;
 
-    @Basic
     @NotNull
     private String email;
 

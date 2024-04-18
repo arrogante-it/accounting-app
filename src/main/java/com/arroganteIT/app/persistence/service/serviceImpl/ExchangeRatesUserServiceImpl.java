@@ -4,6 +4,8 @@ import com.arroganteIT.app.persistence.entity.ExchangeRatesUser;
 import com.arroganteIT.app.persistence.repository.ExchangeRatesUserRepository;
 import com.arroganteIT.app.persistence.service.ExchangeRatesUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,8 +65,8 @@ public class ExchangeRatesUserServiceImpl implements ExchangeRatesUserService {
 
     @Transactional(readOnly = true)
     @Override
-    public ExchangeRatesUser findByName(String name) {
-        return userRepository.findByName(name);
+    public Page<ExchangeRatesUser> findByFirstNameAndLastName(String firstName, String lastName, Pageable pageable) {
+        return userRepository.findByFirstNameAndLastName(firstName, lastName, pageable);
     }
 
 //    @Transactional(readOnly = true)

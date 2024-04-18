@@ -1,6 +1,8 @@
 package com.arroganteIT.app.persistence.service;
 
 import com.arroganteIT.app.persistence.entity.ExchangeRatesUser;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +19,7 @@ public interface ExchangeRatesUserService {
 
     List<ExchangeRatesUser> findAll();
 
-    ExchangeRatesUser findByName(String name);
+    Page<ExchangeRatesUser> findByFirstNameAndLastName(String firstName, String lastName, Pageable pageable);
 
 //    List<User> findAllSortByName();
 //
