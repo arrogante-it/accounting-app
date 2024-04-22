@@ -3,6 +3,7 @@ package com.arroganteIT.app.persistence.entity;
 import com.arroganteIT.app.persistence.embeddableClasses.Address;
 import com.arroganteIT.app.persistence.embeddableClasses.UserName;
 import com.arroganteIT.app.persistence.enums.Gender;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
