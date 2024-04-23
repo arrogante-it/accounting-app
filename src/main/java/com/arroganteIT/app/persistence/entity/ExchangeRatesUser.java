@@ -3,7 +3,6 @@ package com.arroganteIT.app.persistence.entity;
 import com.arroganteIT.app.persistence.embeddableClasses.Address;
 import com.arroganteIT.app.persistence.embeddableClasses.UserName;
 import com.arroganteIT.app.persistence.enums.Gender;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
@@ -24,7 +23,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
@@ -73,8 +71,8 @@ public class ExchangeRatesUser {
     @NotNull
     private LocalDate birthday;
 
+    // removed @Transient annotation
     @Basic
-    @Transient
     @NotNull
     private int age;
 
