@@ -37,25 +37,25 @@ public class ExchangeRatesUserServiceImpl implements ExchangeRatesUserService {
 
     @Transactional
     @Override
-    public ExchangeRatesUser update(ExchangeRatesUser user) {
+    public ExchangeRatesUser update(ExchangeRatesUser newUser) {
 
         //todo change email on unique key
-        ExchangeRatesUser newExchangeRatesUser = exchangeRatesUserRepository.retrieveByEmail(user.getEmail());
+        ExchangeRatesUser existingExchangeRatesUser = exchangeRatesUserRepository.retrieveByEmail(newUser.getEmail());
 
-        if (newExchangeRatesUser == null) {
-            exchangeRatesUserRepository.save(user);
+        if (existingExchangeRatesUser == null) {
+            exchangeRatesUserRepository.save(newUser);
         } else {
-            newExchangeRatesUser.setStatus(user.getStatus());
-            newExchangeRatesUser.setName(user.getName());
-            newExchangeRatesUser.setAddress(user.getAddress());
-            newExchangeRatesUser.setPhoneNumber(user.getPhoneNumber());
-            newExchangeRatesUser.setBirthday(user.getBirthday());
-            newExchangeRatesUser.setAge(user.getAge());
-            newExchangeRatesUser.setGender(user.getGender());
+            existingExchangeRatesUser.setStatus(newUser.getStatus());
+            existingExchangeRatesUser.setName(newUser.getName());
+            existingExchangeRatesUser.setAddress(newUser.getAddress());
+            existingExchangeRatesUser.setPhoneNumber(newUser.getPhoneNumber());
+            existingExchangeRatesUser.setBirthday(newUser.getBirthday());
+            existingExchangeRatesUser.setAge(newUser.getAge());
+            existingExchangeRatesUser.setGender(newUser.getGender());
 
-            exchangeRatesUserRepository.save(newExchangeRatesUser);
+            exchangeRatesUserRepository.save(existingExchangeRatesUser);
         }
-        return newExchangeRatesUser;
+        return existingExchangeRatesUser;
     }
 
     @Transactional(readOnly = true)

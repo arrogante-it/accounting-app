@@ -5,6 +5,7 @@ import com.arroganteIT.app.persistence.enums.AccountType;
 import lombok.Data;
 import lombok.ToString;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -36,6 +37,7 @@ public class Account {
     @NotNull
     private AccountType accountType;
 
+    @Basic
     @Column(columnDefinition = "decimal default 0")
     private double balance;
 
@@ -51,7 +53,6 @@ public class Account {
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "ex_user_id")
-    @NotNull
     private ExchangeRatesUser exuser;
 
     @Override

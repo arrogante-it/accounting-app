@@ -22,7 +22,7 @@ public interface ExchangeRatesUserService {
 
     Page<ExchangeRatesUser> findByFirstNameAndLastName(String firstName, String lastName, Pageable pageable);
 
-//    List<User> findAllSortByName();
+    //    List<User> findAllSortByName();
 //
 //    List<User> findAllSortByNameLength();
 //

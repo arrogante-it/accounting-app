@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -23,47 +24,55 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     @Override
     public void save(Account account) {
+
         accountRepository.save(account);
     }
 
     @Transactional
     @Override
     public void deleteById(Long id) {
+
         accountRepository.deleteById(id);
     }
 
-//    @Transactional
-//    @Override
-//    public Account updateById(Account account, Long id) {
-//        Account existingAccount = accountRepository.findById(id)
-//                .orElseThrow(() -> new EntityNotFoundException("no such account in DB with id = " + id));
-//
-//        existingAccount.setUniqueKey(account.getUniqueKey());
-//        existingAccount.setAccountStatus(account.getAccountStatus());
-//        existingAccount.setAccountType(account.getAccountType());
-//        existingAccount.setBalance(account.getBalance());
-//        existingAccount.setCreatingDate(account.getCreatingDate());
-//        existingAccount.setUser(account.getUser());
-//
-//        return existingAccount;
-//    }
+    @Transactional
+    @Override
+    public Account update(Account newAccount) {
+
+        Account existingAccount = accountRepository.findByUniqueKey(newAccount.getUniqueKey());
+
+        if (existingAccount == null) {
+            accountRepository.save(newAccount);
+        }else {
+            existingAccount.setCreatingDate(newAccount.getCreatingDate());
+            existingAccount.setBalance(newAccount.getBalance());
+            existingAccount.setAccountType(newAccount.getAccountType());
+            existingAccount.setAccountStatus(newAccount.getAccountStatus());
+
+            accountRepository.save(existingAccount);
+        }
+
+        return existingAccount;
+    }
 
     @Transactional(readOnly = true)
     @Override
     public List<Account> findAll() {
+
         return accountRepository.findAll();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Account findById(Long id) {
-        return accountRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("no such account in DB with id = " + id));
+    public Optional<Account> findById(Long id) {
+
+        return accountRepository.findById(id);
     }
 
-//    @Transactional(readOnly = true)
-//    @Override
-//    public Account findByUniqueKey(String uniqueKey) {
-//        return accountRepository.findByUniqueKey(uniqueKey);
-//    }
+    @Transactional(readOnly = true)
+    @Override
+    public Account findByUniqueKey(String uniqueKey) {
+
+        return accountRepository.findByUniqueKey(uniqueKey);
+    }
 }

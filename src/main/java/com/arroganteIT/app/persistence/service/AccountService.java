@@ -11,11 +11,11 @@ public interface AccountService {
 
     void deleteById(Long id);
 
-   // Account updateById(Account account, Long id);
+    Account update(Account account);
 
     List<Account> findAll();
 
-    Account findById(Long id);
+    Optional<Account> findById(Long id);
 
-  //  Account findByUniqueKey(String uniqueKey);
+    Account findByUniqueKey(String uniqueKey);
 }

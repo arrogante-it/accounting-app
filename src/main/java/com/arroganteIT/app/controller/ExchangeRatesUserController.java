@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/ex-user")
+@RequestMapping(value = "/api/v1/ex-user")
 public class ExchangeRatesUserController {
 
     private ExchangeRatesUserService exchangeRatesUserService;
@@ -33,18 +34,25 @@ public class ExchangeRatesUserController {
         this.exchangeRatesUserService = userService;
     }
 
-    @PostMapping("/save")
+    @PostMapping(value = "/save")
     @ResponseStatus(HttpStatus.CREATED)
     public void save(@RequestBody ExchangeRatesUser user) {
 
         exchangeRatesUserService.save(user);
     }
 
-    @PostMapping("/update")
+    @PatchMapping(value = "/update")
     @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody ExchangeRatesUser newUser) {
 
         exchangeRatesUserService.update(newUser);
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteById(@PathVariable("id") Long id) {
+
+        exchangeRatesUserService.deleteById(id);
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -109,12 +117,5 @@ public class ExchangeRatesUserController {
         }
 
         return ResponseEntity.ok(exchangeRatesUser);
-    }
-
-    @DeleteMapping(value = "/delete/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteById(@PathVariable("id") Long id) {
-
-        exchangeRatesUserService.deleteById(id);
     }
 }
