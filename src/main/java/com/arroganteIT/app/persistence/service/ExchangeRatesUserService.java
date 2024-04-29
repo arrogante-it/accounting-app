@@ -4,6 +4,7 @@ import com.arroganteIT.app.persistence.entity.ExchangeRatesUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +14,7 @@ public interface ExchangeRatesUserService {
 
     void deleteById(Long id);
 
- //   User updateById(User user, Long id);
+    ExchangeRatesUser update(ExchangeRatesUser user);
 
     Optional<ExchangeRatesUser> findById(Long id);
 
@@ -25,7 +26,7 @@ public interface ExchangeRatesUserService {
 //
 //    List<User> findAllSortByNameLength();
 //
-//    User retrieveByEmail(String email);
-//
-//    Collection<User> findAllActiveUsers();
+    ExchangeRatesUser retrieveByEmail(String email);
+
+    Collection<ExchangeRatesUser> findAllActiveUsers();
 }

@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Collection;
+
 public interface ExchangeRatesUserRepository extends JpaRepository<ExchangeRatesUser, Long> {
 
     @Query("select u from ExchangeRatesUser u where u.name.firstName = :firstName and " +
@@ -14,10 +16,10 @@ public interface ExchangeRatesUserRepository extends JpaRepository<ExchangeRates
     Page<ExchangeRatesUser> findByFirstNameAndLastName(@Param("firstName") String firstName,
                                                        @Param("lastName") String lastName,
                                                        Pageable pageable);
-//
-//    @Query("select u from User u where lower(u.email) = lower(:email)")
-//    User retrieveByEmail(@Param("email") String email);
-//
-//    @Query("select u from User u where u.status = 1")
-//    Collection<User> findAllActiveUsers();
+
+    @Query("select u from ExchangeRatesUser u where lower(u.email) = lower(:email)")
+    ExchangeRatesUser retrieveByEmail(@Param("email") String email);
+
+    @Query("select u from ExchangeRatesUser u where u.status = 1")
+    Collection<ExchangeRatesUser> findAllActiveUsers();
 }

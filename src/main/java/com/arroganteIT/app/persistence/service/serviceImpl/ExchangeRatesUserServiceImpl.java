@@ -9,64 +9,83 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ExchangeRatesUserServiceImpl implements ExchangeRatesUserService {
 
-    private ExchangeRatesUserRepository userRepository;
+    private ExchangeRatesUserRepository exchangeRatesUserRepository;
 
     @Autowired
     public ExchangeRatesUserServiceImpl(ExchangeRatesUserRepository userRepository) {
-        this.userRepository = userRepository;
+        this.exchangeRatesUserRepository = userRepository;
     }
 
     @Transactional
     @Override
     public void save(ExchangeRatesUser user) {
-        userRepository.save(user);
+        exchangeRatesUserRepository.save(user);
     }
 
     @Transactional
     @Override
     public void deleteById(Long id) {
-        userRepository.deleteById(id);
+        exchangeRatesUserRepository.deleteById(id);
     }
 
-//    @Transactional
-//    @Override
-//    public User updateById(User user, Long id) {
-//        User existingUser = userRepository.findById(id)
-//                .orElseThrow(() -> new EntityNotFoundException("no such user in DB with id = " + id));
-//
-//        existingUser.setUserName(user.getUserName());
-//        existingUser.setAge(user.getAge());
-//        existingUser.setStatus(user.getStatus());
-//        existingUser.setAddress(user.getAddress());
-//        existingUser.setEmail(user.getEmail());
-//        existingUser.setBirthday(user.getBirthday());
-//        existingUser.setGender(user.getGender());
-//        existingUser.setPhoneNumber(user.getPhoneNumber());
-//
-//        return userRepository.save(existingUser);
-//
-//    }
+    @Transactional
+    @Override
+    public ExchangeRatesUser update(ExchangeRatesUser user) {
 
+        //todo change email on unique key
+        ExchangeRatesUser newExchangeRatesUser = exchangeRatesUserRepository.retrieveByEmail(user.getEmail());
+
+        if (newExchangeRatesUser == null) {
+            exchangeRatesUserRepository.save(user);
+        } else {
+            newExchangeRatesUser.setStatus(user.getStatus());
+            newExchangeRatesUser.setName(user.getName());
+            newExchangeRatesUser.setAddress(user.getAddress());
+            newExchangeRatesUser.setPhoneNumber(user.getPhoneNumber());
+            newExchangeRatesUser.setBirthday(user.getBirthday());
+            newExchangeRatesUser.setAge(user.getAge());
+            newExchangeRatesUser.setGender(user.getGender());
+
+            exchangeRatesUserRepository.save(newExchangeRatesUser);
+        }
+        return newExchangeRatesUser;
+    }
+
+    @Transactional(readOnly = true)
     @Override
     public Optional<ExchangeRatesUser> findById(Long id) {
-        return userRepository.findById(id);
+        return exchangeRatesUserRepository.findById(id);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<ExchangeRatesUser> findAll() {
-        return userRepository.findAll();
+        return exchangeRatesUserRepository.findAll();
     }
 
     @Transactional(readOnly = true)
     @Override
     public Page<ExchangeRatesUser> findByFirstNameAndLastName(String firstName, String lastName, Pageable pageable) {
-        return userRepository.findByFirstNameAndLastName(firstName, lastName, pageable);
+        return exchangeRatesUserRepository.findByFirstNameAndLastName(firstName, lastName, pageable);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public ExchangeRatesUser retrieveByEmail(String email) {
+        return exchangeRatesUserRepository.retrieveByEmail(email);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Collection<ExchangeRatesUser> findAllActiveUsers() {
+        return exchangeRatesUserRepository.findAllActiveUsers();
     }
 
 //    @Transactional(readOnly = true)
@@ -79,17 +98,5 @@ public class ExchangeRatesUserServiceImpl implements ExchangeRatesUserService {
 //    @Override
 //    public List<User> findAllSortByNameLength() {
 //        return userRepository.findAll(JpaSort.unsafe("length(name)"));
-//    }
-//
-//    @Transactional(readOnly = true)
-//    @Override
-//    public User retrieveByEmail(String email) {
-//        return userRepository.retrieveByEmail(email);
-//    }
-//
-//    @Transactional(readOnly = true)
-//    @Override
-//    public Collection<User> findAllActiveUsers() {
-//        return userRepository.findAllActiveUsers();
 //    }
 }

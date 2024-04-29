@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,24 +26,31 @@ import java.util.Optional;
 @RequestMapping("/api/v1/ex-user")
 public class ExchangeRatesUserController {
 
-    private ExchangeRatesUserService userService;
+    private ExchangeRatesUserService exchangeRatesUserService;
 
     @Autowired
     public ExchangeRatesUserController(ExchangeRatesUserService userService) {
-        this.userService = userService;
+        this.exchangeRatesUserService = userService;
     }
 
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     public void save(@RequestBody ExchangeRatesUser user) {
 
-        userService.save(user);
+        exchangeRatesUserService.save(user);
+    }
+
+    @PostMapping("/update")
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@RequestBody ExchangeRatesUser newUser) {
+
+        exchangeRatesUserService.update(newUser);
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Optional<ExchangeRatesUser>> findById(@PathVariable Long id) {
 
-        Optional<ExchangeRatesUser> exchangeRatesUser = userService.findById(id);
+        Optional<ExchangeRatesUser> exchangeRatesUser = exchangeRatesUserService.findById(id);
 
         if (exchangeRatesUser.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -53,7 +62,7 @@ public class ExchangeRatesUserController {
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ExchangeRatesUser>> findAll() {
 
-        List<ExchangeRatesUser> exchangeRatesUserList = userService.findAll();
+        List<ExchangeRatesUser> exchangeRatesUserList = exchangeRatesUserService.findAll();
 
         if (exchangeRatesUserList.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -69,12 +78,43 @@ public class ExchangeRatesUserController {
             Pageable pageable) {
 
         Page<ExchangeRatesUser> byFirstNameAndLastName =
-                userService.findByFirstNameAndLastName(firstName, lastName, pageable);
+                exchangeRatesUserService.findByFirstNameAndLastName(firstName, lastName, pageable);
 
         if (byFirstNameAndLastName.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
         return ResponseEntity.ok(byFirstNameAndLastName);
+    }
+
+    @GetMapping(value = "/all-active", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Collection<ExchangeRatesUser>> findAllActiveUsers() {
+
+        Collection<ExchangeRatesUser> exchangeRatesUsers = exchangeRatesUserService.findAllActiveUsers();
+
+        if (exchangeRatesUsers.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(exchangeRatesUsers);
+    }
+
+    @GetMapping(value = "/by-email", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ExchangeRatesUser> retrieveByEmail(@RequestParam("email") String email) {
+
+        ExchangeRatesUser exchangeRatesUser = exchangeRatesUserService.retrieveByEmail(email);
+
+        if (exchangeRatesUser == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(exchangeRatesUser);
+    }
+
+    @DeleteMapping(value = "/delete/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteById(@PathVariable("id") Long id) {
+
+        exchangeRatesUserService.deleteById(id);
     }
 }
