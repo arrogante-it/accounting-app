@@ -15,9 +15,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "account")
@@ -50,10 +52,24 @@ public class Account {
     @NotNull
     private AccountStatus accountStatus;
 
-    @ToString.Exclude
-    @ManyToOne
+//    @ToString.Exclude
+//    @ManyToOne
+//    @JoinColumn(name = "ex_user_id")
+//    private ExchangeRatesUser exuser;
+
+    @OneToOne
     @JoinColumn(name = "ex_user_id")
     private ExchangeRatesUser exuser;
+
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "currency_id")
+    private List<Currency> currencyList;
+
+    @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private List<Category> categoryList;
 
     @Override
     public boolean equals(Object o) {

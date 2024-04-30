@@ -22,6 +22,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -80,10 +81,14 @@ public class ExchangeRatesUser {
     @NotNull
     private Gender gender;
 
-    @Setter(AccessLevel.PRIVATE)
+//    @Setter(AccessLevel.PRIVATE)
+//    @ToString.Exclude
+//    @OneToMany(mappedBy = "exuser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+//    private List<Account> accounts;
+
     @ToString.Exclude
-    @OneToMany(mappedBy = "exuser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Account> accounts;
+    @OneToOne(mappedBy = "exuser")
+    private Account account;
 
     @Override
     public boolean equals(Object o) {
